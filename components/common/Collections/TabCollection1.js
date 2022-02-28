@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
@@ -136,12 +136,28 @@ const SpecialProducts = ({
   backImage,
 }) => {
   const [activeTab, setActiveTab] = useState(type);
+  const [mydata, setMyData] = useState([]);
   const context = useContext(CartContext);
   const wishListContext = useContext(WishlistContext);
   const compareContext = useContext(CompareContext);
   const curContext = useContext(CurrencyContext);
   const currency = curContext.state;
   const quantity = context.quantity;
+
+  useEffect(() => {
+    const url = "http://127.0.0.1:8000/product/detial";
+    const fetchData = async () => {
+        try {
+          const response = await fetch(url);
+          const json = await response.json();
+          let res = {products:{items: json.data}};
+          setMyData(res);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+    fetchData();
+  }, []);
 
   var { loading, data } = useQuery(GET_PRODUCTS, {
     variables: {
@@ -150,7 +166,8 @@ const SpecialProducts = ({
       limit: 8,
     },
   });
-
+  console.log(data);
+  console.log(mydata);
   return (
     <div>
       <section className={designClass}>
@@ -178,7 +195,7 @@ const SpecialProducts = ({
                 className={activeTab == type ? "active" : ""}
                 onClick={() => setActiveTab(type)}
               >
-                NEW ARRIVAL
+                NEW ARRIVAL new
               </Tab>
               <Tab
                 className={activeTab == "furniture" ? "active" : ""}
@@ -196,7 +213,7 @@ const SpecialProducts = ({
 
             <TabPanel>
               <TabContent
-                data={data}
+                data={mydata}
                 loading={loading}
                 startIndex={0}
                 endIndex={8}
@@ -206,7 +223,7 @@ const SpecialProducts = ({
             </TabPanel>
             <TabPanel>
               <TabContent
-                data={data}
+                data={mydata}
                 loading={loading}
                 startIndex={0}
                 endIndex={8}
@@ -216,7 +233,7 @@ const SpecialProducts = ({
             </TabPanel>
             <TabPanel>
               <TabContent
-                data={data}
+                data={mydata}
                 loading={loading}
                 startIndex={0}
                 endIndex={8}
