@@ -3,7 +3,15 @@ import CommonLayout from '../../../components/shop/common-layout';
 import { Container, Row ,Col} from 'reactstrap';
 
 const Dashboard = () => {
-    const [accountInfo,setAccountInfo] = useState(false)
+    const [accountInfo,setAccountInfo] = useState(false);
+    let userData = window.localStorage.getItem('user-details');
+    let name = '';
+    let email = '';
+    if(!!userData){
+        let user = JSON.parse(userData);
+        name = user.firstname+' '+user.lastname;
+        email = user.username;
+    }
     return (
         <CommonLayout parent="home" title="dashboard">
             <section className="section-b-space">
@@ -40,7 +48,7 @@ const Dashboard = () => {
                                         <h2>My Dashboard</h2>
                                     </div>
                                     <div className="welcome-msg">
-                                        <p>Hello, MARK JECNO !</p>
+                                        <p>Hello, {name}!</p>
                                         <p>From your My Account Dashboard you have the ability to view a snapshot of your recent
                                         account activity and update your account information. Select a link below to view or
                                     edit information.</p>
@@ -56,8 +64,8 @@ const Dashboard = () => {
                                                         <h3>Contact Information</h3><a href="#">Edit</a>
                                                     </div>
                                                     <div className="box-content">
-                                                        <h6>MARK JECNO</h6>
-                                                        <h6>MARk-JECNO@gmail.com</h6>
+                                                        <h6>{name}</h6>
+                                                        <h6>{email}</h6>
                                                         <h6><a href="#">Change Password</a></h6>
                                                     </div>
                                                 </div>
