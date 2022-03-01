@@ -94,6 +94,7 @@ const LeftSidebarPage = ({ pathId }) => {
           const response = await fetch(url);
           const json = await response.json();
           let res = {product:json.data};
+          console.log(res);
           setMyData(res);
         } catch (error) {
             console.log("error", error);
@@ -140,25 +141,19 @@ const LeftSidebarPage = ({ pathId }) => {
                                         asNavFor={nav1}
                                         ref={slider => (slider2.current = slider)}
                                     >
-                                        {data.product.variants ?
-                                            data.product.images.map((vari, index) =>
+                                        {mydata.product.images.map((vari, index) =>
                                                 <div key={index}>
                                                     <Media src={`${vari.src}`} key={index} alt={vari.alt} className="img-fluid w-100" />
+                                                    {mydata.product.images.src}
                                                 </div>
-                                            ) :
-                                            ''}
+                                            )}
                                     </Slider>
                                 </Row>
                             </Col>
                             <Col lg="5" sm="10" xs="12" className="order-up">
                                 <Slider {...products} asNavFor={nav2} ref={slider => (slider1.current = slider)} className="product-right-slick">
-                                    {data.product.variants ?
-                                        data.product.images.map((vari, index) =>
-                                            <div key={index}>
-                                                <ImageZoom image={vari} />
-                                            </div>
-                                        ) :
-                                        data.product.images.map((vari, index) =>
+                                    {
+                                        mydata.product.images.map((vari, index) =>
                                             <div key={index}>
                                                 <ImageZoom image={vari} />
                                             </div>
