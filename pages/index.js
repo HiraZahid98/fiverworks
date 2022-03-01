@@ -56,12 +56,12 @@ const Fashion = () => {
         noSlider="true"
         cartClass="cart-info cart-wrap"
       />
-      <ServiceLayout sectionClass="border-section small-section" />
-      <Blog type="fashion" title="title1" inner="title-inner1" />
-      <Instagram type="fashion" />
-      <div className="section-b-space">
+      {/* <ServiceLayout sectionClass="border-section small-section" />
+      <Blog type="fashion" title="title1" inner="title-inner1" /> */}
+      {/* <Instagram type="fashion" /> */}
+      {/* <div className="section-b-space">
         <LogoBlock />
-      </div>
+      </div> */}
       <MasterFooter
         footerClass={`footer-light`}
         footerLayOut={"light-layout upper-footer"}

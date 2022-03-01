@@ -20,6 +20,8 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
   const quantity = context.quantity;
   const uniqueColor = [];
   const uniqueSize = [];
+  const [activeSize, setActiveSize] = useState("");
+  const [activeColor, setActiveColor] = useState("");
 
   const changeQty = (e) => {
     setQuantity(parseInt(e.target.value));
@@ -47,13 +49,13 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
           var findItemSize = uniqueSize.find((x) => x === vari.size);
           if (!findItemSize) uniqueSize.push(vari.size);
         })}
-        {changeColorVar === undefined ? (
+        {/* {changeColorVar === undefined ? (
           <>
             {uniqueColor ? (
               <ul className="color-variant">
                 {uniqueColor.map((vari, i) => {
                   return (
-                    <li className={vari.color} key={i} title={vari.color}></li>
+                    <li className={activeColor === vari.color ? vari.color+" active" : vari.color} key={i} title={vari.color} onClick={() => setActiveColor(vari.color)}></li>
                   );
                 })}
               </ul>
@@ -80,7 +82,20 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
               ""
             )}
           </>
-        )}
+        )} */}
+        <>
+          {uniqueColor ? (
+            <ul className="color-variant">
+              {uniqueColor.map((vari, i) => {
+                return (
+                  <li className={activeColor === vari.color ? vari.color+" active" : vari.color} key={i} title={vari.color} onClick={() => setActiveColor(vari.color)}></li>
+                );
+              })}
+            </ul>
+          ) : (
+            ""
+          )}
+        </>
         <div className="product-description border-product">
           {product.variants ? (
             <div>
@@ -107,7 +122,7 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
                 <ul>
                   {uniqueSize.map((data, i) => {
                     return (
-                      <li key={i}>
+                      <li key={i} className={activeSize === data ? "active" : ""} onClick={() => setActiveSize(data)}>
                         <a href={null}>{data}</a>
                       </li>
                     );
