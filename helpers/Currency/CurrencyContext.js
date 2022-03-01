@@ -4,9 +4,9 @@ export const Context = createContext({});
 
 export const Provider = (props) => {
   const [selectedCurr, selectedCurrency] = useState({
-    currency: "USD",
-    symbol: "$",
-    value: 1,
+    currency: "IND",
+    symbol: "₹",
+    value: 60,
   });
 
   const currencyContext = {

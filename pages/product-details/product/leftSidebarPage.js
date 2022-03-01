@@ -9,6 +9,7 @@ import ImageZoom from "../common/image-zoom";
 import DetailsWithPrice from "../common/detail-price";
 import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
+import { useRouter } from 'next/router';
 
 const GET_SINGLE_PRODUCTS = gql`
   query product($id: Int!) {
@@ -45,6 +46,9 @@ const LeftSidebarPage = ({ pathId }) => {
       id: parseInt(pathId),
     },
   });
+  const router = useRouter()
+  const [mydata, setMyData] = useState([]);
+
 
   const [state, setState] = useState({ nav1: null, nav2: null });
   const slider1 = useRef();
@@ -82,6 +86,22 @@ const LeftSidebarPage = ({ pathId }) => {
     slider2.current.slickGoTo(img_id);
   };
 
+  useEffect(() => {
+    let id = router.query.id;
+    const url = "http://127.0.0.1:8000/product/"+id;
+    const fetchData = async () => {
+        try {
+          const response = await fetch(url);
+          const json = await response.json();
+          let res = {product:json.data};
+          setMyData(res);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+    fetchData();
+  }, []);
+  //console.log(data);
   return (
     <section className="">
       <div className="collection-wrapper">
@@ -106,53 +126,52 @@ const LeftSidebarPage = ({ pathId }) => {
                     </div>
                   </Col>
                 </Row>
-                {!data ||
-                !data.product ||
-                data.product.length === 0 ||
+                {!mydata ||
+                !mydata.product ||
+                mydata.product.length === 0 ||
                 loading ? (
                   "loading"
                 ) : (
-                  <Row>
-                    <Col lg="6" className="product-thumbnail">
-                      <Slider
-                        {...products}
-                        asNavFor={nav2}
-                        ref={(slider) => (slider1.current = slider)}
-                        className="product-slick"
-                      >
-                        {data.product.images.map((vari, index) => (
-                          <div key={index}>
-                            <ImageZoom image={vari} />
-                          </div>
-                        ))}
-                      </Slider>
-                      <Slider
-                        className="slider-nav"
-                        {...productsnav}
-                        asNavFor={nav1}
-                        ref={(slider) => (slider2.current = slider)}
-                      >
-                        {data.product.variants
-                          ? data.product.images.map((vari, index) => (
-                              <div key={index}>
-                                <Media
-                                  src={`${vari.src}`}
-                                  key={index}
-                                  alt={vari.alt}
-                                  className="img-fluid"
-                                />
-                              </div>
-                            ))
-                          : ""}
-                      </Slider>
-                    </Col>
-                    <Col lg="6" className="rtl-text">
-                      <DetailsWithPrice
-                        item={data.product}
-                        changeColorVar={changeColorVar}
-                      />
-                    </Col>
-                  </Row>
+                  <Row className="leftImage">
+                            <Col lg="1" sm="2" xs="12" >
+                                <Row>
+                                    <Slider className="slider-nav image-left-thumb"
+                                        {...productsnav}
+                                        asNavFor={nav1}
+                                        ref={slider => (slider2.current = slider)}
+                                    >
+                                        {data.product.variants ?
+                                            data.product.images.map((vari, index) =>
+                                                <div key={index}>
+                                                    <Media src={`${vari.src}`} key={index} alt={vari.alt} className="img-fluid w-100" />
+                                                </div>
+                                            ) :
+                                            ''}
+                                    </Slider>
+                                </Row>
+                            </Col>
+                            <Col lg="5" sm="10" xs="12" className="order-up">
+                                <Slider {...products} asNavFor={nav2} ref={slider => (slider1.current = slider)} className="product-right-slick">
+                                    {data.product.variants ?
+                                        data.product.images.map((vari, index) =>
+                                            <div key={index}>
+                                                <ImageZoom image={vari} />
+                                            </div>
+                                        ) :
+                                        data.product.images.map((vari, index) =>
+                                            <div key={index}>
+                                                <ImageZoom image={vari} />
+                                            </div>
+                                        )}
+                                </Slider>
+                            </Col>
+                            <Col lg="6" className="rtl-text">
+                            {!!mydata.product && <DetailsWithPrice
+                              item={mydata.product}
+                              changeColorVar={changeColorVar}
+                            />}
+                            </Col>
+                        </Row>
                 )}
               </Container>
               <ProductTab />

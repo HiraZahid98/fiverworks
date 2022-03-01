@@ -5,3 +5,19 @@
 .form-control-custom{
     margin-bottom: 10px !important;
 }
+
+.image-left-thumb .slick-track, .image-left-thumb .slick-track .slick-slide{
+    width: 100% !important;
+}
+
+.size-box li.active{
+    background: #ff4c3b !important;
+}
+
+.size-box li.active > a{
+    color: #ffffff !important;
+}
+
+.color-variant li.active {
+    box-shadow: 5px 3px 9px #adacac !important;
+  }

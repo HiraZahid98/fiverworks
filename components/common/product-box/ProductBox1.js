@@ -44,7 +44,7 @@ const ProductItem = ({
 
   const clickProductDetail = () => {
     const titleProps = product.title.split(" ").join("");
-    router.push(`/product-details/${product.id}` + "-" + `${titleProps}`);
+    router.push(`/product-details/${product.id}`);
   };
 
   const variantChangeByColor = (imgId, product_images) => {
