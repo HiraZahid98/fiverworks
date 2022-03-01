@@ -30,7 +30,7 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
   return (
     <>
       <div className={`product-right ${stickyClass}`}>
-        Detail Price
+          {/* Detail Price */}
         <h2> {product.title} </h2>
         <h4>
           <del>

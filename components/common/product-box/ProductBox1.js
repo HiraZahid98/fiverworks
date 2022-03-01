@@ -69,7 +69,7 @@ const ProductItem = ({
           />
         </div>
         {backImage ? (
-          product.images[1] === "undefined" ? (
+          product.images[1] === undefined ? (
             "false"
           ) : (
             <div className="back" onClick={clickProductDetail}>
