@@ -242,7 +242,7 @@ const ProductItem = ({
                   <p>{product.description}</p>
                 </div>
                 <div className="product-description border-product">
-                  {product.size ? (
+                  {/* {product.size ? (
                     <div className="size-box">
                       <ul>
                         {product.size.map((size, i) => {
@@ -256,7 +256,7 @@ const ProductItem = ({
                     </div>
                   ) : (
                     ""
-                  )}
+                  )} */}
                   <h6 className="product-title">quantity</h6>
                   <div className="qty-box">
                     <div className="input-group">

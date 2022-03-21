@@ -88,7 +88,7 @@ const LeftSidebarPage = ({ pathId }) => {
 
   useEffect(() => {
     let id = router.query.id;
-    const url = "http://127.0.0.1:8000/product/"+id;
+    const url = "http://shoppyspot.com/shoppyspot-backend/web/project/productdetails?id="+id;
     const fetchData = async () => {
         try {
           const response = await fetch(url);
