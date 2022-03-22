@@ -17,7 +17,7 @@ const TopBarDark = ({ topClass, fluid }) => {
     if(!!userData){
       setShow(true);
       let user = JSON.parse(userData);
-      setName(user.firstname+' '+user.lastname)
+      setName(user.username+' '+user.last_name)
     }
   },[])
   return (

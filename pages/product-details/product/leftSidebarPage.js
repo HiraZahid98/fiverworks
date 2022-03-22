@@ -11,41 +11,42 @@ import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
 import { useRouter } from 'next/router';
 
-const GET_SINGLE_PRODUCTS = gql`
-  query product($id: Int!) {
-    product(id: $id) {
-      id
-      title
-      description
-      type
-      brand
-      category
-      price
-      new
-      sale
-      discount
-      stock
-      variants {
-        id
-        sku
-        size
-        color
-        image_id
-      }
-      images {
-        alt
-        src
-      }
-    }
-  }
-`;
+// const GET_SINGLE_PRODUCTS = gql`
+//   query product($id: Int!) {
+//     product(id: $id) {
+//       id
+//       title
+//       description
+//       type
+//       brand
+//       category
+//       price
+//       new
+//       sale
+//       discount
+//       stock
+//       variants {
+//         id
+//         sku
+//         size
+//         color
+//         image_id
+//       }
+//       images {
+//         alt
+//         src
+//       }
+//     }
+//   }
+// `;
 
 const LeftSidebarPage = ({ pathId }) => {
-  var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
-    variables: {
-      id: parseInt(pathId),
-    },
-  });
+  // var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
+  //   variables: {
+  //     id: parseInt(pathId),
+  //   },
+  // });
+  var { loading } = '';
   const router = useRouter()
   const [mydata, setMyData] = useState([]);
 
@@ -74,7 +75,7 @@ const LeftSidebarPage = ({ pathId }) => {
       nav1: slider1.current,
       nav2: slider2.current,
     });
-  }, [data]);
+  }, [mydata]);
 
   const { nav1, nav2 } = state;
 
@@ -88,10 +89,15 @@ const LeftSidebarPage = ({ pathId }) => {
 
   useEffect(() => {
     let id = router.query.id;
-    const url = "http://127.0.0.1:8000/product/"+id;
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id })
+    };
+    const url = "http://shoppyspot.com/shoppyspot-backend/web/project/productdetails";
     const fetchData = async () => {
         try {
-          const response = await fetch(url);
+          const response = await fetch(url, requestOptions);
           const json = await response.json();
           let res = {product:json.data};
           console.log(res);
@@ -102,7 +108,6 @@ const LeftSidebarPage = ({ pathId }) => {
     };
     fetchData();
   }, []);
-  //console.log(data);
   return (
     <section className="">
       <div className="collection-wrapper">
@@ -112,7 +117,7 @@ const LeftSidebarPage = ({ pathId }) => {
               <Filter />
               <Service />
               {/* <!-- side-bar single product slider start --> */}
-              <NewProduct />
+              {/* <NewProduct /> */}
               {/* <!-- side-bar single product slider end --> */}
             </Col>
             <Col lg="9" sm="12" xs="12">
@@ -169,7 +174,7 @@ const LeftSidebarPage = ({ pathId }) => {
                         </Row>
                 )}
               </Container>
-              <ProductTab />
+              <ProductTab item={mydata.product} />
             </Col>
           </Row>
         </Container>
