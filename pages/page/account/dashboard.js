@@ -9,7 +9,7 @@ const Dashboard = () => {
     let email = '';
     if(!!userData){
         let user = JSON.parse(userData);
-        name = user.firstname+' '+user.lastname;
+        name = user.username+' '+user.last_name;
         email = user.username;
     }
     return (

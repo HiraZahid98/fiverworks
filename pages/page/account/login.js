@@ -15,19 +15,20 @@ const Login = () => {
         (password === '') ? setPasswordValidation(true) : setPasswordValidation(false);
         if(email !== '' && password !== ''){
             setIsLoading(true);
-            fetch('http://127.0.0.1:8000/user/login', {
+            fetch('http://shoppyspot.com/shoppyspot-backend/web/project/userlogin', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ 
-                email: email,
+                username: email,
                 password: password,
               }),
             }).then((res) => res.json())
             .then((data) => {
                 if(data.status === 'success'){
-                    let res = data.insertId;
+                    debugger;
+                    let res = data.userData;
                     window.localStorage.setItem("user-details", JSON.stringify(res));
                     router.push('/page/account/dashboard');
                     setIsLoading(false);
