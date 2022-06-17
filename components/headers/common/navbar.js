@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { MENUITEMS } from "../../constant/menu";
+//import { MENUITEMS } from "../../constant/menu";
 import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ const NavBar = () => {
   const { t } = useTranslation();
   const [navClose, setNavClose] = useState({ right: "0px" });
   const router = useRouter();
+  const MENUITEMS = []
 
   useEffect(() => {
     if (window.innerWidth < 750) {
@@ -16,6 +17,23 @@ const NavBar = () => {
     }
     if (window.innerWidth < 1199) {
       setNavClose({ right: "-300px" });
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      console.log(
+        `App is changing to ${url}`
+      )
+      //setState({ clicked: false, menuName: "Menu" })
+    }
+
+    router.events.on('routeChangeStart', handleRouteChange)
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
     }
   }, []);
 
@@ -54,9 +72,21 @@ const NavBar = () => {
   };
 
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
-
+  //console.log(MENUITEMS);
   useEffect(() => {
     const currentUrl = location.pathname;
+    const requestUrl = "https://thexboss.com/web/project/menulist";
+    const fetchData = async () => {
+      try {
+        const response = await fetch(requestUrl);
+        const json = await response.json();
+        const apiMenu = json.menus;
+        setMainMenu(apiMenu);
+      } catch (error) {
+          console.log("error", error);
+      }
+    };
+    fetchData();
     MENUITEMS.filter((items) => {
       if (items.path === currentUrl) setNavActive(items);
       if (!items.children) return false;
@@ -68,10 +98,11 @@ const NavBar = () => {
         });
       });
     });
+    
   }, []);
 
   const setNavActive = (item) => {
-    MENUITEMS.filter((menuItem) => {
+    mainmenu.filter((menuItem) => {
       if (menuItem != item) menuItem.active = false;
       if (menuItem.children && menuItem.children.includes(item))
         menuItem.active = true;
@@ -85,14 +116,14 @@ const NavBar = () => {
       }
     });
 
-    setMainMenu({ mainmenu: MENUITEMS });
+    setMainMenu({ mainmenu: mainmenu });
   };
 
   // Click Toggle menu
   const toggletNavActive = (item) => {
     if (!item.active) {
-      MENUITEMS.forEach((a) => {
-        if (MENUITEMS.includes(item)) a.active = false;
+      mainmenu.forEach((a) => {
+        if (mainmenu.includes(item)) a.active = false;
         if (!a.children) return false;
         a.children.forEach((b) => {
           if (a.children.includes(item)) {
@@ -108,7 +139,7 @@ const NavBar = () => {
       });
     }
     item.active = !item.active;
-    setMainMenu({ mainmenu: MENUITEMS });
+    setMainMenu({ mainmenu: mainmenu });
   };
 
   const openMblNav = (event) => {
@@ -141,7 +172,7 @@ const NavBar = () => {
                 <i className="fa fa-angle-right pl-2" aria-hidden="true"></i>
               </div>
             </li>
-            {MENUITEMS.map((menuItem, i) => {
+            {!!mainmenu && mainmenu.map((menuItem, i) => {
               return (
                 <li
                   key={i}

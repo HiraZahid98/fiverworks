@@ -12,7 +12,7 @@ import {
 
 const ProductTab = (item) => {
   const [activeTab, setActiveTab] = useState("1");
-  const product = item;
+  const product = item?.item;
   return (
     <section className="tab-product m-0">
       <Container>
@@ -55,7 +55,7 @@ const ProductTab = (item) => {
               </Nav>
               <TabContent activeTab={activeTab} className="nav-material">
                 <TabPane tabId="1">
-                  <p className="mb-0 pb-0">{product.description}</p>
+                  {!!product && <p className="mb-0 pb-0">{product.description}</p>}
                 </TabPane>
                 <TabPane tabId="2">
                   <p className="mb-0 pb-0">

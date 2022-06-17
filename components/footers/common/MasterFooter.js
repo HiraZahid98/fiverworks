@@ -71,6 +71,7 @@ const MasterFooter = ({
                           id="exampleFormControlInput1"
                           placeholder="Enter your email"
                         />
+                        {/* <span>Mari</span> */}
                       </FormGroup>
                       <Button type="submit" className="btn btn-solid">
                         subscribe

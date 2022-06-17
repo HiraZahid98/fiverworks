@@ -145,7 +145,7 @@ const SpecialProducts = ({
   const quantity = context.quantity;
 
   useEffect(() => {
-    const url = "http://shoppyspot.com/shoppyspot-backend/web/project/productlist";
+    const url = "https://thexboss.com/web/project/productlist";
     const fetchData = async () => {
         try {
           const response = await fetch(url);

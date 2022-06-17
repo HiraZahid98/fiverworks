@@ -23,7 +23,7 @@ const Register = () => {
         (lastname === '') ? setLastnameValidation(true) : setLastnameValidation(false);
         (mobile === '') ? setMobileValidation(true) : setMobileValidation(false);
         if(firstname !== '' && email !== '' && password !== ''){
-            fetch('http://127.0.0.1:8000/user/register', {
+            fetch('https://thexboss.com/web/project/userregister', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -34,12 +34,13 @@ const Register = () => {
                 lastname: lastname,
                 mobile: mobile,
                 password: password,
+                city: 'Chennai',
                 }),
             }).then((res) => res.json())
             .then((data) => {
                 if(data.status === 'success'){
                     window.localStorage.removeItem('user-details');
-                    history.push("page/account/login");
+                    history.push("/page/account/login");
                 }
             })
             .catch(console.log);

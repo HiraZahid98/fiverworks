@@ -85,6 +85,8 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [layout, setLayout] = useState(layoutList);
   const [url, setUrl] = useState();
+  const [mydata, setMyData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
     const pathname = window.location.pathname;
@@ -106,6 +108,36 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
       limit: limit,
     },
   });
+
+  useEffect(() => {
+    let id = router.query.id;
+    let res = id.includes("_");
+    let categoryId = '';
+    let subCategoryId = '';
+    if(res){
+      const idArray = id.split("_");
+      categoryId = idArray[0];
+      subCategoryId = idArray[1];
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ categoryId: categoryId, subCategoryId: subCategoryId })
+    };
+    const requestUrl = "https://thexboss.com/web/project/categoryproduct";
+    const fetchData = async () => {
+        try {
+          const response = await fetch(requestUrl,requestOptions);
+          const json = await response.json();
+          let res = {products:{items: json.data}};
+          setMyData(res);
+          setFilterData(res);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+    fetchData();
+  }, []);
 
   const handlePagination = () => {
     setIsLoading(true);
@@ -151,39 +183,24 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
     filterContext.setSelectedColor("");
   };
 
+  const handleFilterProduct = (value) => {
+    let data = mydata;
+    if(value === 'AscOrder'){
+
+    }
+    //data = mydata.sort((a, b) => a.title.localeCompare(b.title))
+    data = mydata.products.items.sort(function(a,b){
+      return a.title.localeCompare(b.title);
+    })
+    setFilterData(data);
+  }
+
   return (
     <Col className="collection-content">
       <div className="page-main-content">
         <Row>
           <Col sm="12">
-            <div className="top-banner-wrapper">
-              <a href={null}>
-                <Media
-                  src={Menu2}
-                  className="img-fluid blur-up lazyload"
-                  alt=""
-                />
-              </a>
-              <div className="top-banner-content small-section">
-                <h4>fashion</h4>
-                <h5>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </h5>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged. It was popularised in the 1960s with
-                  the release of Letraset sheets containing Lorem Ipsum
-                  passages, and more recently with desktop publishing software
-                  like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
-              </div>
-            </div>
+            
             <Row>
               <Col xs="12">
                 <ul className="product-filter-tags">
@@ -334,7 +351,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                         </select>
                       </div>
                       <div className="product-page-filter">
-                        <select onChange={(e) => setSortBy(e.target.value)}>
+                        <select onChange={(e) => handleFilterProduct(e.target.value)}>
                           <option value="AscOrder">Sorting items</option>
                           <option value="HighToLow">High To Low</option>
                           <option value="LowToHigh">Low To High</option>
@@ -350,15 +367,15 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
               <div className={`product-wrapper-grid ${layout}`}>
                 <Row>
                   {/* Product Box */}
-                  {!data ||
-                  !data.products ||
-                  !data.products.items ||
-                  data.products.items.length === 0 ||
+                  {!filterData ||
+                  !filterData.products ||
+                  !filterData.products.items ||
+                  filterData.products.items.length === 0 ||
                   loading ? (
-                    data &&
-                    data.products &&
-                    data.products.items &&
-                    data.products.items.length === 0 ? (
+                    filterData &&
+                    filterData.products &&
+                    filterData.products.items &&
+                    filterData.products.items.length === 0 ? (
                       <Col xs="12">
                         <div>
                           <div className="col-sm-12 empty-cart-cls text-center">
@@ -391,8 +408,8 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                       </div>
                     )
                   ) : (
-                    data &&
-                    data.products.items.map((product, i) => (
+                    filterData &&
+                    filterData.products.items.map((product, i) => (
                       <div className={grid} key={i}>
                         <div className="product">
                           <div>

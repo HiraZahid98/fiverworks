@@ -5,8 +5,9 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",
@@ -35,7 +36,6 @@
     "next-graphql-react": "^8.0.0",
     "next-images": "^1.4.0",
     "next-redux-wrapper": "^6.0.2",
-    "next-routes": "^1.4.2",
     "node-fetch": "^2.6.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
@@ -58,7 +58,6 @@
     "react-messenger-customer-chat": "^0.8.0",
     "react-paypal-button": "^4.1.1",
     "react-responsive-modal": "^5.0.2",
-    "react-router-dom": "^5.2.0",
     "react-slick": "^0.26.1",
     "react-sticky-el": "^2.0.5",
     "react-tabs": "^3.1.1",

@@ -13,8 +13,28 @@ import offerBanner from "../../public/assets/images/Offer-banner.png";
 
 const ModalComponent = () => {
   const [modal, setModal] = useState(true);
+  const [email, setEmail] = useState('');
+  const [emailValidation, setEmailValidation] = useState(false);
 
   const toggle = () => setModal(!modal);
+
+  const handleSubmit = async() => {
+    
+    if(email !== ''){
+      setEmailValidation(false);
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      };
+      const requestUrl = "https://thexboss.com/web/project/addsubscribtion";
+      const response = await fetch(requestUrl,requestOptions);
+      const json = await response.json();
+      console.log(json);
+    }else{
+      setEmailValidation(true);
+    }
+  }
 
   return (
     <Modal
@@ -60,11 +80,14 @@ const ModalComponent = () => {
                         id="mce-EMAIL"
                         placeholder="Enter your email"
                         required="required"
+                        onChange={(e) => setEmail(e.target.value)}
                       />
+                      {emailValidation && <div className="validate-error">Please Enter your email.</div>}
                       <Button
-                        type="submit"
+                        type="button"
                         className="btn btn-solid"
                         id="mc-submit"
+                        onClick={handleSubmit}
                       >
                         subscribe
                       </Button>

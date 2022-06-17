@@ -52,25 +52,25 @@ export const MENUITEMS = [
    // },
    { path: '/', title: 'Home', type: 'link', children:false},
    { path: '/page/about-us', title: 'About', type: 'link', children:false},
-   {
-      title: 'Shop', type: 'sub', children: [
-         { path: '#', title: 'Left Sidebar', type: 'link' },
-         { path: '#', title: 'Right Sidebar', type: 'link' },
-         { path: '#', title: 'No Sidebar', type: 'link', },
-         { path: '#', title: 'Sidebar Popup', type: 'link' },
-         { path: '#', title: 'Metro', type: 'link', tag: 'new' },
-         { path: '#', title: 'Full Width', type: 'link', tag: 'new' },
-         { path: '#', title: '3 Grid', type: 'link' },
-         { path: '#', title: '6 Six', type: 'link' },
-         { path: '#', title: 'List View', type: 'link' }
-      ],
-   },
+   // {
+   //    title: 'Shop', type: 'sub', children: [
+   //       { path: '#', title: 'Left Sidebar', type: 'link' },
+   //       { path: '#', title: 'Right Sidebar', type: 'link' },
+   //       { path: '#', title: 'No Sidebar', type: 'link', },
+   //       { path: '#', title: 'Sidebar Popup', type: 'link' },
+   //       { path: '#', title: 'Metro', type: 'link', tag: 'new' },
+   //       { path: '#', title: 'Full Width', type: 'link', tag: 'new' },
+   //       { path: '#', title: '3 Grid', type: 'link' },
+   //       { path: '#', title: '6 Six', type: 'link' },
+   //       { path: '#', title: 'List View', type: 'link' }
+   //    ],
+   // },
    {
       title: 'Products', type: 'sub', children: [
          {
             title: 'Mobile', type: 'sub', children: [
-               { path: '#', title: 'OnePlus', type: 'link' },
-               { path: '#', title: 'boAt', type: 'link' },
+               { path: '/shop/1', title: 'OnePlus', type: 'link' },
+               { path: '/shop/2', title: 'boAt', type: 'link' },
             ]
          },
          {
@@ -79,31 +79,7 @@ export const MENUITEMS = [
                { path: '#', title: 'Accessories', type: 'link' },
             ]
          },
-         // {
-         //    title: "3-Column", type: "sub", children: [
-         //       { path: '/product-details/3_col_left', title: 'Thumbnail Left', type: 'link' },
-         //       { path: '/product-details/3_col_right', title: 'Thumbnail Right', type: 'link' },
-         //       { path: '/product-details/3_col_bottom', title: 'Thumbnail Bottom', type: 'link' }
-         //    ]
-         // },
-         // {
-         //    path: '/product-details/4_image', title: '4 Image', type: 'link', tag: 'New'
-         // },
-         // {
-         //    path: '/product-details/bundle_product', title: 'Bundle Product', type: 'link', tag: 'New'
-         // },
-         // {
-         //    path: '/product-details/sticky', title: 'Sticky', type: 'link'
-         // },
-         // {
-         //    path: '/product-details/accordian', title: 'Accordian', type: 'link'
-         // },
-         // {
-         //    path: '/product-details/image_swatch', title: 'Image Swatch', type: 'link', tag: 'New'
-         // },
-         // {
-         //    path: '/product-details/vertical_tab', title: 'Vertical Tab', type: 'link'
-         // },
+         
       ]
    },
    // {
