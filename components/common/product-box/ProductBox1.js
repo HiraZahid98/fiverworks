@@ -61,27 +61,22 @@ const ProductItem = ({
           {product.new === true ? <span className="lable3">new</span> : ""}
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
+        {product.images.length > 0 && (
         <div className="front" onClick={clickProductDetail}>
           <Media
             src={`${image ? image : product.images[0].src}`}
             className="img-fluid"
             alt=""
           />
-        </div>
-        {backImage ? (
-          product.images[1] === undefined ? (
-            "false"
-          ) : (
-            <div className="back" onClick={clickProductDetail}>
-              <Media
-                src={`${image ? image : product.images[1].src}`}
-                className="img-fluid m-auto"
-                alt=""
-              />
-            </div>
-          )
-        ) : (
-          ""
+        </div>)}
+        {product.images.length > 0 && (
+          <div className="back" onClick={clickProductDetail}>
+            <Media
+              src={`${image ? image : product.images[1].src}`}
+              className="img-fluid m-auto"
+              alt=""
+            />
+          </div>
         )}
 
         <div className={cartClass}>
@@ -107,7 +102,7 @@ const ProductItem = ({
               <Row className="compare-modal">
                 <Col lg="12">
                   <div className="media">
-                    <Media
+                    {product.images.length > 0 && <Media
                       src={`${
                         product.variants && image
                           ? image
@@ -115,7 +110,7 @@ const ProductItem = ({
                       }`}
                       alt=""
                       className="img-fluid"
-                    />
+                    />}
                     <div className="media-body align-self-center text-center">
                       <h5>
                         <i className="fa fa-check"></i>Item{" "}
@@ -140,7 +135,7 @@ const ProductItem = ({
             </ModalBody>
           </Modal>
         </div>
-        {product.images ? (
+        {!!product.images ? (
           <ul className="product-thumb-list">
             {product.images.map((img, i) => (
               <li
@@ -182,13 +177,13 @@ const ProductItem = ({
           <Row>
             <Col lg="6" xs="12">
               <div className="quick-view-img">
-                <Media
+                {product.images.length > 0 &&<Media
                   src={`${
                     product.variants && image ? image : product.images[0].src
                   }`}
                   alt=""
                   className="img-fluid"
-                />
+                />}
               </div>
             </Col>
             <Col lg="6" className="rtl-text">

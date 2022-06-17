@@ -94,7 +94,7 @@ const LeftSidebarPage = ({ pathId }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id })
     };
-    const url = "http://shoppyspot.com/shoppyspot-backend/web/project/productdetails";
+    const url = "https://thexboss.com/web/project/productdetails";
     const fetchData = async () => {
         try {
           const response = await fetch(url, requestOptions);

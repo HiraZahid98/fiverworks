@@ -15,7 +15,7 @@ const Login = () => {
         (password === '') ? setPasswordValidation(true) : setPasswordValidation(false);
         if(email !== '' && password !== ''){
             setIsLoading(true);
-            fetch('http://shoppyspot.com/shoppyspot-backend/web/project/userlogin', {
+            fetch('https://thexboss.com/web/project/userlogin', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,6 @@ const Login = () => {
             }).then((res) => res.json())
             .then((data) => {
                 if(data.status === 'success'){
-                    debugger;
                     let res = data.userData;
                     window.localStorage.setItem("user-details", JSON.stringify(res));
                     router.push('/page/account/dashboard');
